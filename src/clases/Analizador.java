@@ -5,16 +5,16 @@ package clases;
 
 
 public class Analizador {
-    
+
     int estado = 0, error = 0, token = 0, cont = 0;
     public int tokens[] = new int[33], errores= 0;
     char c = 0;
     public String cadena = "", lexema = "", lexValidos="", lexNoValidos ="";
-    
+
     public Analizador(String cadena){
         this.cadena = cadena; //.replaceAll("\\s", "");
     }
-    
+
     int obtenerToken(){
         lexema = "";
         token=0;
@@ -23,7 +23,6 @@ public class Analizador {
         while(error==0 && token==0){
             if(cont<cadena.length()){
                 c = cadena.charAt(cont);
-                if (c != ' ' && c != '\n') lexema=lexema+c;
             }
             else{
                 c=0;
@@ -31,99 +30,121 @@ public class Analizador {
             cont++;
             switch(estado){
                 case 0:
-                    if(Character.isLetterOrDigit(c)){
-                        if(Character.isLetter(c)) estado = 1;
-                        else estado = 2;
+                    if(Character.isLetter(c) == true){
+                        lexema = lexema + c;
+                        estado = 1;
                     }
                     else{
-                        switch(c){
-                            case '"': estado = 3;
-                            break;
-                            case ':': estado = 4;
-                            break;
-                            case ';': estado = 5;
-                            break;
-                            case '=': estado = 6;
-                            break;
-                            case '+': estado = 7;
-                            break;
-                            case '-': estado = 8;
-                            break;
-                            case '*': estado = 9;
-                            break;
-                            case '/': estado = 10;
-                            break;
-                            case ',': estado = 11;
-                            break;
-                            case '(': estado = 12;
-                            break;
-                            case ')': estado = 13;
-                            break;
-                            case '{': estado = 14;
-                            break;
-                            case '}': estado = 15;
-                            break;
-                            case '>': estado = 16;
-                            break;
-                            case '<': estado = 17;
-                            break;
-                            default: if ( c != ' ' && c!= '\n') error = 1;
+                        if(Character.isDigit(c) == true){
+                            estado= 2;
+                            lexema = lexema + c;
+                        } 
+                        else{
+                            switch(c){
+                                case '"': estado = 3; lexema = lexema + c;
+                                break;
+                                case ':': estado = 4; lexema = lexema + c;
+                                break;
+                                case ';': estado = 5; lexema = lexema + c;
+                                break;
+                                case '=': estado = 6; lexema = lexema + c;
+                                break;
+                                case '+': estado = 7; lexema = lexema + c;
+                                break;
+                                case '-': estado = 8; lexema = lexema + c;
+                                break;
+                                case '*': estado = 9; lexema = lexema + c;
+                                break;
+                                case '/': estado = 10; lexema = lexema + c;
+                                break;
+                                case ',': estado = 11; lexema = lexema + c;
+                                break;
+                                case '(': estado = 12; lexema = lexema + c;
+                                break;
+                                case ')': estado = 13; lexema = lexema + c;
+                                break;
+                                case '{': estado = 14; lexema = lexema + c;
+                                break;
+                                case '}': estado = 15; lexema = lexema + c;
+                                break;
+                                case '>': estado = 16; lexema = lexema + c;
+                                break;
+                                case '<': estado = 17; lexema = lexema + c;
+                                break;
+                                case ' ': estado = 0;
+                                break;
+                                case '\n': estado = 0;
+                                break;
+                                case '\t': estado = 0;
+                                break;
+                                case '#': estado = 25;
+                                break;
+                                default: error = 1;
+                                break;
+                            }
                         }
                     }
                 break;
-                case 1: 
-                    if(Character.isLetterOrDigit(c)) estado = 1;
-                    else token = 1;
+                case 1:
+                    if (Character.isLetterOrDigit(c) == true) {
+                        estado = 1; lexema = lexema + c;
+                    } else {
+                        token = 1;
+                    }
                 break;
-                case 2: 
-                    if(Character.isDigit(c)) estado = 2;
-                    else{ 
-                        if(c == '.') estado = 18;
-                        else token = 2;
-                    };
+                case 2:
+                    if (Character.isDigit(c) == true) {
+                        estado = 2; lexema = lexema + c;
+                    } else {
+                        if (c == '.') {
+                            estado = 18; lexema = lexema + c;
+                        } else {
+                            token = 2;
+                        }
+                    }
                 break;
-                case 3: estado = 19;
+                case 3: estado = 19; lexema = lexema + c;
                 break;
-                case 4: token = 5;
+                case 4: token = 5; 
                 break;
-                case 5: token = 6;
+                case 5: token = 6; 
                 break;
-                case 6: token = 7;
+                case 6: token = 7; 
                 break;
-                case 7: token = 8;
+                case 7: token = 8; 
                 break;
-                case 8: token = 9;
+                case 8: token = 9; 
                 break;
-                case 9: token = 10;
+                case 9: token = 10; 
                 break;
-                case 10: token = 11;
+                case 10: token = 11; 
                 break;
-                case 11: token = 12;
+                case 11: token = 12; 
                 break;
-                case 12: token = 13;
+                case 12: token = 13; 
                 break;
-                case 13: token = 14;
+                case 13: token = 14; 
                 break;
-                case 14: token = 15;
+                case 14: token = 15; 
                 break;
-                case 15: token = 16;
+                case 15: token = 16; 
                 break;
-                case 16: if (c == '=') estado = 20;
+                case 16: if (c == '=') {estado = 20; lexema = lexema + c;}
                     else token = 17;
                 break;
-                case 17: if (c == '=') estado = 21;
+                case 17: if (c == '=') {estado = 21; lexema = lexema + c;}
                     else{
-                        if (c == '>') estado = 22;
+                        if (c == '>') {estado = 22; lexema = lexema + c;}
                         else token = 18;
                     }
                 break;
                 case 18:
-                    if (Character.isDigit(c)) estado = 23;
+                    if (Character.isDigit(c) == true) {estado = 23; lexema = lexema + c;}
                     else error= 1;
                 break;
                 case 19:
-                    if (c=='"')estado = 24;
-                    else estado = 19;
+                    if (c=='"'){estado = 24; lexema = lexema + c;}
+                    else {estado = 19; lexema = lexema + c;}
                 break;
                 case 20: token = 19;
                 break;
@@ -131,49 +152,58 @@ public class Analizador {
                 break;
                 case 22: token = 21;
                 break;
-                case 23: 
-                    if (Character.isDigit(c)) estado = 23;
+                case 23:
+                    if (Character.isDigit(c)) {estado = 23; lexema = lexema + c;}
                     else token= 3;
                 break;
                 case 24: token = 4;
                 break;
+                case 25: 
+                    if(c=='\n') estado = 26;
+                    else estado = 25;
+                break;
+                case 26: token = 34;
+                break;
             }
         }
-        if(c!=0)eliminarUltimo();
-        switch(lexema){
-                case "void": token = 22; cont++;
+        cont--;
+        //if(c!=0)eliminarUltimo();
+        if(error > 0) {lexNoValidos = lexema; token = 0;}
+        else{
+            switch(lexema){
+                case "void": token = 22; 
                 break;
-                case "entero": token = 23; cont++;
+                case "entero": token = 23; 
                 break;
-                case "real": token = 24; cont++;
+                case "real": token = 24; 
                 break;
-                case "cadena": token = 25; cont++;
+                case "cadena": token = 25; 
                 break;
-                case "salida": token = 26; cont++;
+                case "salida": token = 26; 
                 break;
-                case "entrada": token = 27; cont++;
+                case "entrada": token = 27; 
                 break;
-                case "si": token = 28; cont++;
+                case "si": token = 28;
                 break;
-                case "entonces": token = 29; cont++;
+                case "entonces": token = 29; 
                 break;
-                case "sino": token = 30; cont++;
+                case "sino": token = 30; 
                 break;
-                case "finsi": token = 31; cont++;
+                case "finsi": token = 31; 
                 break;
-                case "principal": token = 32; cont++;
+                case "principal": token = 32; 
                 break;
-                case "llamar": token = 33; cont++;
+                case "llamar": token = 33; 
                 break;
             }
-        cont--;
-        if(error != 0){errores++; cont++; return token;}
+        }
+        if(error != 0){errores++;  return token;}
         return token;
     }
-    
+
     public void encontrarTokens(){
-        while(cont<cadena.length() && error == 0){
-            
+        while(cont<cadena.length()){
+
             switch(obtenerToken()){
                 case 1: tokens[0]++; lexValidos = lexValidos + this.lexema + '\n';
                 break;
@@ -243,10 +273,10 @@ public class Analizador {
                 break;
                 default: lexNoValidos = lexNoValidos + this.lexema + '\n';
                 break;
-            }         
+            }
         }
     }
-    
+
     void eliminarUltimo(){
         String auxLexema = "";
         if (lexema.length() > 1){
