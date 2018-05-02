@@ -179,21 +179,21 @@ public class Analizador {
                 break;
                 case "cadena": token = 25; 
                 break;
-                case "salida": token = 26; 
+                case "Salida": token = 26; 
                 break;
-                case "entrada": token = 27; 
+                case "Entrada": token = 27; 
                 break;
-                case "si": token = 28;
+                case "Si": token = 28;
                 break;
-                case "entonces": token = 29; 
+                case "Sntonces": token = 29; 
                 break;
-                case "sino": token = 30; 
+                case "Sino": token = 30; 
                 break;
-                case "finsi": token = 31; 
+                case "Finsi": token = 31; 
                 break;
-                case "principal": token = 32; 
+                case "Principal": token = 32; 
                 break;
-                case "llamar": token = 33; 
+                case "Llamar": token = 33;
                 break;
             }
         }
