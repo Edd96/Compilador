@@ -1,27 +1,81 @@
 package clases;
 
+import java.util.Set;
 
 //Esta clase permite identificar los tokens
 
 
 public class Analizador {
 
-    int estado = 0, error = 0, token = 0, cont = 0;
-    public int tokens[] = new int[33], errores= 0;
-    char c = 0;
-    public String cadena = "", lexema = "", lexValidos="", lexNoValidos ="";
+    /**
+     * Token, de dato
+     */
+    public class Token {
+        
+        protected int id;
+        protected String lex;
+        protected Token ant;
+        protected Token sig;
 
+        public Token(int id, String lex){
+            this.id = id;
+            this.lex = lex;
+            ant = null;
+            sig = null;
+        }
+    }
+
+    /**
+     * ListaTokens
+     */
+    public class ListaTokens {
+    
+        Token prToken, ulToken, acToken;//para llevar control del primer, ultimo y actual token
+        int totalTokens;//conteo de tokens
+        
+        public ListaTokens(){
+            this.prToken = null;
+            this.ulToken = null;
+            this.acToken = null;
+            this.totalTokens = 0;
+        }
+
+        boolean esListaVacia(){
+            return(prToken == null);
+        }
+
+        void addToken(int id, String lexema){
+            Token tokenNuevo = new Token(id,lexema);
+            if(esListaVacia()){
+                prToken = tokenNuevo;
+            }
+            else{
+                tokenNuevo.ant = ulToken;
+                ulToken.sig = tokenNuevo;
+            }
+            ulToken = tokenNuevo;
+            acToken = tokenNuevo;
+            totalTokens++;
+        }
+    }
+    int estado = 0, auxtoken = 0, cont = 0;
+    int error= 0, errLinea= 1, errCol;// errores y posicion de estos
+    char c = 0;
+    public String cadena = "", lexema = "";//variables para lexema
+    ListaTokens objLista;//lista donde se almacena los lexemas
     public Analizador(String cadena){
-        this.cadena = cadena; //.replaceAll("\\s", "");
+        this.cadena = cadena;
+        objLista = new ListaTokens(); 
     }
 
     int obtenerToken(){
         lexema = "";
-        token=0;
+        auxtoken=0;
         error=0;
         estado = 0;
-        while(error==0 && token==0){
+        while(error==0 && auxtoken==0){
             if(cont<cadena.length()){
+                errCol++;
                 c = cadena.charAt(cont);
             }
             else{
@@ -38,7 +92,7 @@ public class Analizador {
                         if(Character.isDigit(c) == true){
                             estado= 2;
                             lexema = lexema + c;
-                        } 
+                        }
                         else{
                             switch(c){
                                 case '"': estado = 3; lexema = lexema + c;
@@ -74,6 +128,8 @@ public class Analizador {
                                 case ' ': estado = 0;
                                 break;
                                 case '\n': estado = 0;
+                                    errLinea++;
+                                    errCol = 0;
                                 break;
                                 case '\t': estado = 0;
                                 break;
@@ -89,7 +145,7 @@ public class Analizador {
                     if (Character.isLetterOrDigit(c) == true) {
                         estado = 1; lexema = lexema + c;
                     } else {
-                        token = 1;
+                        auxtoken = 1;
                     }
                 break;
                 case 2:
@@ -99,43 +155,43 @@ public class Analizador {
                         if (c == '.') {
                             estado = 18; lexema = lexema + c;
                         } else {
-                            token = 2;
+                            auxtoken = 2;
                         }
                     }
                 break;
                 case 3: estado = 19; lexema = lexema + c;
                 break;
-                case 4: token = 5; 
+                case 4: auxtoken = 5;
                 break;
-                case 5: token = 6; 
+                case 5: auxtoken = 6;
                 break;
-                case 6: token = 7; 
+                case 6: auxtoken = 7;
                 break;
-                case 7: token = 8; 
+                case 7: auxtoken = 8;
                 break;
-                case 8: token = 9; 
+                case 8: auxtoken = 9;
                 break;
-                case 9: token = 10; 
+                case 9: auxtoken = 10;
                 break;
-                case 10: token = 11; 
+                case 10: auxtoken = 11;
                 break;
-                case 11: token = 12; 
+                case 11: auxtoken = 12;
                 break;
-                case 12: token = 13; 
+                case 12: auxtoken = 13;
                 break;
-                case 13: token = 14; 
+                case 13: auxtoken = 14;
                 break;
-                case 14: token = 15; 
+                case 14: auxtoken = 15;
                 break;
-                case 15: token = 16; 
+                case 15: auxtoken = 16;
                 break;
                 case 16: if (c == '=') {estado = 20; lexema = lexema + c;}
-                    else token = 17;
+                    else auxtoken = 17;
                 break;
                 case 17: if (c == '=') {estado = 21; lexema = lexema + c;}
                     else{
                         if (c == '>') {estado = 22; lexema = lexema + c;}
-                        else token = 18;
+                        else auxtoken = 18;
                     }
                 break;
                 case 18:
@@ -146,146 +202,63 @@ public class Analizador {
                     if (c=='"'){estado = 24; lexema = lexema + c;}
                     else {estado = 19; lexema = lexema + c;}
                 break;
-                case 20: token = 19;
+                case 20: auxtoken = 19;
                 break;
-                case 21: token = 20;
+                case 21: auxtoken = 20;
                 break;
-                case 22: token = 21;
+                case 22: auxtoken = 21;
                 break;
                 case 23:
                     if (Character.isDigit(c)) {estado = 23; lexema = lexema + c;}
-                    else token= 3;
+                    else auxtoken= 3;
                 break;
-                case 24: token = 4;
+                case 24: auxtoken = 4;
                 break;
-                case 25: 
+                case 25:
                     if(c=='\n') estado = 26;
                     else estado = 25;
                 break;
-                case 26: token = 34;
+                case 26: auxtoken = 34;
                 break;
             }
         }
         cont--;
         //if(c!=0)eliminarUltimo();
-        if(error > 0) {lexNoValidos = lexema; token = 0;}
+        if(error > 0) {}
         else{
             switch(lexema){
-                case "void": token = 22; 
+                case "void": auxtoken = 22;
                 break;
-                case "entero": token = 23; 
+                case "entero": auxtoken = 23;
                 break;
-                case "real": token = 24; 
+                case "real": auxtoken = 24;
                 break;
-                case "cadena": token = 25; 
+                case "cadena": auxtoken = 25;
                 break;
-                case "Salida": token = 26; 
+                case "Salida": auxtoken = 26;
                 break;
-                case "Entrada": token = 27; 
+                case "Entrada": auxtoken = 27;
                 break;
-                case "Si": token = 28;
+                case "Si": auxtoken = 28;
                 break;
-                case "Sntonces": token = 29; 
+                case "Entonces": auxtoken = 29; 
                 break;
-                case "Sino": token = 30; 
+                case "Sino": auxtoken = 30;
                 break;
-                case "Finsi": token = 31; 
+                case "Finsi": auxtoken = 31;
                 break;
-                case "Principal": token = 32; 
+                case "Principal": auxtoken = 32;
                 break;
-                case "Llamar": token = 33;
+                case "Llamar": auxtoken = 33;
                 break;
             }
         }
-        if(error != 0){errores++;  return token;}
-        return token;
+        return auxtoken;
     }
 
     public void encontrarTokens(){
         while(cont<cadena.length()){
-
-            switch(obtenerToken()){
-                case 1: tokens[0]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 2: tokens[1]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 3: tokens[2]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 4: tokens[3]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 5: tokens[4]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 6: tokens[5]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 7: tokens[6]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 8: tokens[7]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 9: tokens[8]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 10: tokens[9]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 11: tokens[10]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 12: tokens[11]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 13: tokens[12]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 14: tokens[13]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 15: tokens[14]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 16: tokens[15]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 17: tokens[16]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 18: tokens[17]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 19: tokens[18]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 20: tokens[19]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 21: tokens[20]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 22: tokens[21]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 23: tokens[22]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 24: tokens[23]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 25: tokens[24]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 26: tokens[25]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 27: tokens[26]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 28: tokens[27]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 29: tokens[28]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 30: tokens[29]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 31: tokens[30]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 32: tokens[31]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                case 33: tokens[32]++; lexValidos = lexValidos + this.lexema + '\n';
-                break;
-                default: lexNoValidos = lexNoValidos + this.lexema + '\n';
-                break;
-            }
-        }
-    }
-
-    void eliminarUltimo(){
-        String auxLexema = "";
-        if (lexema.length() > 1){
-        for (int i = 0; i < lexema.length(); i++) {
-            if (i!=lexema.length()-1) {
-                auxLexema= auxLexema + lexema.charAt(i);
-            }
-        }
-        lexema = auxLexema;
+            objLista.addToken(obtenerToken(), lexema);
         }
     }
 }

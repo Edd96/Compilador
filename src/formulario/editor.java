@@ -233,46 +233,6 @@ public class editor extends javax.swing.JFrame {
     private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
         Analizador objAnalizador = new Analizador(txtEditor.getText());
         objAnalizador.encontrarTokens();
-        txtConsola.setText("Resultados: \n" +
-            "IDs: " + objAnalizador.tokens[0] +'\n'+
-            "Entero: " + objAnalizador.tokens[1] + '\n' + 
-            "Real: " + objAnalizador.tokens[2] + '\n' + 
-            "Cadena: " + objAnalizador.tokens[3] + '\n' +
-            "Dos pt.: " + objAnalizador.tokens[4] + '\n' +
-            "Pt coma: " + objAnalizador.tokens[5] + '\n' +
-            "Igual: " + objAnalizador.tokens[6] + '\n' +
-            "Suma: " + objAnalizador.tokens[7] + '\n' +
-            "Resta: " + objAnalizador.tokens[8] + '\n' +
-            "Mult: " + objAnalizador.tokens[9] + '\n' +
-            "Div: " + objAnalizador.tokens[10] + '\n' +
-            "Coma: " + objAnalizador.tokens[11] + '\n' +    
-            "Par. ab: " + objAnalizador.tokens[12] + '\n' +
-            "Par. cer: " + objAnalizador.tokens[13] + '\n' +
-            "Llave ab: " + objAnalizador.tokens[14] + '\n' +
-            "Llave cer: " + objAnalizador.tokens[15] + '\n' +
-            "Mayor que: " + objAnalizador.tokens[16] + '\n' +
-            "Menor: " + objAnalizador.tokens[17] + '\n' +
-            "Mayor igual: " + objAnalizador.tokens[18] + '\n' +
-            "Menor igual: " + objAnalizador.tokens[19] + '\n' +
-            "Diferente: " + objAnalizador.tokens[20] + '\n' +
-            "PR Void: " + objAnalizador.tokens[21] + '\n' +
-            "PR Entero: " + objAnalizador.tokens[22] + '\n' +
-            "PR Real: " + objAnalizador.tokens[23] + '\n' +
-            "PR Cadena: " + objAnalizador.tokens[24] + '\n' +
-            "PR Salida: " + objAnalizador.tokens[25] + '\n' +
-            "PR Entrada: " + objAnalizador.tokens[26] + '\n' +
-            "PR si: " + objAnalizador.tokens[27] + '\n' +
-            "PR entonces: " + objAnalizador.tokens[28] + '\n' +
-            "PR sino: " + objAnalizador.tokens[29] + '\n' +
-            "PR finsi: " + objAnalizador.tokens[30] + '\n' +
-            "PR Principal: " + objAnalizador.tokens[31] + '\n' +
-            "PR Llamar: " + objAnalizador.tokens[32] + '\n' +
-            "Errores: " + objAnalizador.errores + '\n' +
-            "----------------------\n" +
-            "Lexemas Validos: \n" +
-                objAnalizador.lexValidos + '\n'+
-            "Lexemas NO Validos: \n" +
-                objAnalizador.lexNoValidos);
     }//GEN-LAST:event_btnAnalizarActionPerformed
 
     private void mnArchivoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnArchivoNuevoActionPerformed
