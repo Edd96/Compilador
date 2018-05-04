@@ -767,6 +767,13 @@ public class frmALexico extends javax.swing.JFrame {
         txtPrFinsi.setText(String.valueOf(toks[30]));
         txtPrPrincipal.setText(String.valueOf(toks[31]));
         txtPrLlamar.setText(String.valueOf(toks[32]));
+        
+        if(objAnalizaLex.cadErrores != ""){
+            frmErroresLex objErroresPant = new frmErroresLex();
+            objErroresPant.recibir(objAnalizaLex.cadErrores);
+            objErroresPant.setVisible(true);
+                    
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

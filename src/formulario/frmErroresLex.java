@@ -16,6 +16,7 @@ public class frmErroresLex extends javax.swing.JFrame {
      */
     public frmErroresLex() {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -94,7 +95,9 @@ public class frmErroresLex extends javax.swing.JFrame {
         });
     }
 
-   
+    public void recibir(String cadena){
+        txtErroresLex.setText(cadena);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtErroresLex;

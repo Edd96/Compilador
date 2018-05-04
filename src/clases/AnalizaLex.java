@@ -59,9 +59,9 @@ public class AnalizaLex {
         }
     }
     int estado = 0, auxtoken = 0, cont = 0;
-    int error= 0, errLinea= 1, errCol;// errores y posicion de estos
+    int error= 0, errLinea= 1, errCol = 0;// errores y posicion de estos
     char c = 0;
-    public String cadena = "", lexema = "";//variables para lexema
+    public String cadena = "", lexema = "", cadErrores = "";//variables para lexema
     public ListaTokens objLista;//lista donde se almacena los lexemas
     public AnalizaLex(String cadena){
         this.cadena = cadena;
@@ -75,8 +75,13 @@ public class AnalizaLex {
         estado = 0;
         while(error==0 && auxtoken==0){
             if(cont<cadena.length()){
-                errCol++;
                 c = cadena.charAt(cont);
+                if(c!='\n'){
+                    errCol++;
+                }
+                else{
+                    errCol = 0;
+                }
             }
             else{
                 c=0;
@@ -129,13 +134,14 @@ public class AnalizaLex {
                                 break;
                                 case '\n': estado = 0;
                                     errLinea++;
-                                    errCol = 0;
                                 break;
                                 case '\t': estado = 0;
                                 break;
                                 case '#': estado = 25;
                                 break;
-                                default: error = 1;
+                                case 0: auxtoken = 404;
+                                break;
+                                default: error = 1; lexema = lexema + c;
                                 break;
                             }
                         }
@@ -215,17 +221,21 @@ public class AnalizaLex {
                 case 24: auxtoken = 4;
                 break;
                 case 25:
-                    if(c=='\n') estado = 26;
+                    if(c=='\n') {estado = 26; errLinea++;}
                     else estado = 25;
                 break;
                 case 26: auxtoken = 34;
                 break;
             }
         }
-        cont--;
         //if(c!=0)eliminarUltimo();
-        if(error > 0) {}
+        if(error > 0) {
+            cadErrores = cadErrores + "Error en linea: "+ String.valueOf(errLinea) + " Columna: " + String.valueOf(errCol) + " Simbolo: " + lexema + '\n'; 
+            
+        }
         else{
+             cont--;
+             errCol--;
             switch(lexema){
                 case "void": auxtoken = 22;
                 break;
@@ -251,6 +261,9 @@ public class AnalizaLex {
                 break;
                 case "Llamar": auxtoken = 33;
                 break;
+            }
+            if(auxtoken==404){
+                auxtoken = 0;
             }
         }
         return auxtoken;
