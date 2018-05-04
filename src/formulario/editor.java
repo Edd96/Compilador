@@ -5,7 +5,7 @@
  */
 package formulario;
 
-import clases.Analizador;
+import clases.AnalizaLex;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author eddpe
  */
 public class editor extends javax.swing.JFrame {
-
+    frmALexico objFormulaioLex;
     /**
      * Creates new form editor
      */
@@ -35,31 +35,27 @@ public class editor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtConsola = new javax.swing.JTextArea();
         btnAnalizar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtEditor = new javax.swing.JTextArea();
         btnLimpiar = new javax.swing.JButton();
         mnBar = new javax.swing.JMenuBar();
-        archivoAbrir = new javax.swing.JMenu();
+        menuAbrir = new javax.swing.JMenu();
         mnArchivoNuevo = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         mnArchivoGuardar = new javax.swing.JMenuItem();
         mnArchivoSalir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuAnalisis = new javax.swing.JMenu();
+        mnAnalisisArchivo = new javax.swing.JMenu();
+        mnAnalisisSalidaProg = new javax.swing.JMenuItem();
+        mnAnalisisTablaTokens = new javax.swing.JMenuItem();
+        mnAnalisisErroresXML = new javax.swing.JMenuItem();
+        menuAyuda = new javax.swing.JMenu();
         mnAyudaAcercade = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Analizador Léxico V0.5");
+        setTitle("Compilador D++");
         setName("frmAnalizador"); // NOI18N
-
-        txtConsola.setColumns(20);
-        txtConsola.setFont(new java.awt.Font("Liberation Mono", 0, 14)); // NOI18N
-        txtConsola.setRows(5);
-        txtConsola.setText("Consola...");
-        txtConsola.setEnabled(false);
-        jScrollPane1.setViewportView(txtConsola);
 
         btnAnalizar.setText("Analizar");
         btnAnalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +75,7 @@ public class editor extends javax.swing.JFrame {
             }
         });
 
-        archivoAbrir.setText("Archivo");
+        menuAbrir.setText("Archivo");
 
         mnArchivoNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         mnArchivoNuevo.setText("Nuevo");
@@ -88,7 +84,7 @@ public class editor extends javax.swing.JFrame {
                 mnArchivoNuevoActionPerformed(evt);
             }
         });
-        archivoAbrir.add(mnArchivoNuevo);
+        menuAbrir.add(mnArchivoNuevo);
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Abrir");
@@ -97,7 +93,7 @@ public class editor extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        archivoAbrir.add(jMenuItem1);
+        menuAbrir.add(jMenuItem1);
 
         mnArchivoGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         mnArchivoGuardar.setText("Guardar");
@@ -106,7 +102,7 @@ public class editor extends javax.swing.JFrame {
                 mnArchivoGuardarActionPerformed(evt);
             }
         });
-        archivoAbrir.add(mnArchivoGuardar);
+        menuAbrir.add(mnArchivoGuardar);
 
         mnArchivoSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         mnArchivoSalir.setText("Salir");
@@ -115,16 +111,33 @@ public class editor extends javax.swing.JFrame {
                 mnArchivoSalirActionPerformed(evt);
             }
         });
-        archivoAbrir.add(mnArchivoSalir);
+        menuAbrir.add(mnArchivoSalir);
 
-        mnBar.add(archivoAbrir);
+        mnBar.add(menuAbrir);
 
-        jMenu2.setText("Ayuda");
+        menuAnalisis.setText("Analisis");
+
+        mnAnalisisArchivo.setText("Analizar Archivo");
+
+        mnAnalisisSalidaProg.setText("Salida del Programa");
+        mnAnalisisArchivo.add(mnAnalisisSalidaProg);
+
+        mnAnalisisTablaTokens.setText("Tabla de Simbolos");
+        mnAnalisisArchivo.add(mnAnalisisTablaTokens);
+
+        mnAnalisisErroresXML.setText("Errores (Archivo XML)");
+        mnAnalisisArchivo.add(mnAnalisisErroresXML);
+
+        menuAnalisis.add(mnAnalisisArchivo);
+
+        mnBar.add(menuAnalisis);
+
+        menuAyuda.setText("Ayuda");
 
         mnAyudaAcercade.setText("Acerca de");
-        jMenu2.add(mnAyudaAcercade);
+        menuAyuda.add(mnAyudaAcercade);
 
-        mnBar.add(jMenu2);
+        mnBar.add(menuAyuda);
 
         setJMenuBar(mnBar);
 
@@ -134,29 +147,23 @@ public class editor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAnalizar)
-                    .addComponent(btnLimpiar))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAnalizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpiar))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(btnAnalizar)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnLimpiar)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnalizar)
+                    .addComponent(btnLimpiar))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,13 +238,13 @@ public class editor extends javax.swing.JFrame {
 }
     
     private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
-        Analizador objAnalizador = new Analizador(txtEditor.getText());
-        objAnalizador.encontrarTokens();
+        objFormulaioLex= new frmALexico();
+        objFormulaioLex.setVisible(true);
+        objFormulaioLex.analizar(txtEditor.getText());
     }//GEN-LAST:event_btnAnalizarActionPerformed
 
     private void mnArchivoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnArchivoNuevoActionPerformed
         txtEditor.setText("");
-        txtConsola.setText("Consola...");
     }//GEN-LAST:event_mnArchivoNuevoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -253,7 +260,6 @@ public class editor extends javax.swing.JFrame {
     }//GEN-LAST:event_mnArchivoSalirActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtConsola.setText("Consola...");
         txtEditor.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -284,7 +290,6 @@ public class editor extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(editor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -294,19 +299,22 @@ public class editor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu archivoAbrir;
     private javax.swing.JButton btnAnalizar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenu menuAbrir;
+    private javax.swing.JMenu menuAnalisis;
+    private javax.swing.JMenu menuAyuda;
+    private javax.swing.JMenu mnAnalisisArchivo;
+    private javax.swing.JMenuItem mnAnalisisErroresXML;
+    private javax.swing.JMenuItem mnAnalisisSalidaProg;
+    private javax.swing.JMenuItem mnAnalisisTablaTokens;
     private javax.swing.JMenuItem mnArchivoGuardar;
     private javax.swing.JMenuItem mnArchivoNuevo;
     private javax.swing.JMenuItem mnArchivoSalir;
     private javax.swing.JMenuItem mnAyudaAcercade;
     private javax.swing.JMenuBar mnBar;
-    private javax.swing.JTextArea txtConsola;
     private javax.swing.JTextArea txtEditor;
     // End of variables declaration//GEN-END:variables
 }

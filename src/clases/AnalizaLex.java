@@ -5,17 +5,17 @@ import java.util.Set;
 //Esta clase permite identificar los tokens
 
 
-public class Analizador {
+public class AnalizaLex {
 
     /**
      * Token, de dato
      */
     public class Token {
         
-        protected int id;
-        protected String lex;
-        protected Token ant;
-        protected Token sig;
+        public int id;
+        public String lex;
+        public Token ant;
+        public Token sig;
 
         public Token(int id, String lex){
             this.id = id;
@@ -30,7 +30,7 @@ public class Analizador {
      */
     public class ListaTokens {
     
-        Token prToken, ulToken, acToken;//para llevar control del primer, ultimo y actual token
+        public Token prToken, ulToken, acToken;//para llevar control del primer, ultimo y actual token
         int totalTokens;//conteo de tokens
         
         public ListaTokens(){
@@ -62,8 +62,8 @@ public class Analizador {
     int error= 0, errLinea= 1, errCol;// errores y posicion de estos
     char c = 0;
     public String cadena = "", lexema = "";//variables para lexema
-    ListaTokens objLista;//lista donde se almacena los lexemas
-    public Analizador(String cadena){
+    public ListaTokens objLista;//lista donde se almacena los lexemas
+    public AnalizaLex(String cadena){
         this.cadena = cadena;
         objLista = new ListaTokens(); 
     }
@@ -245,7 +245,7 @@ public class Analizador {
                 break;
                 case "Sino": auxtoken = 30;
                 break;
-                case "Finsi": auxtoken = 31;
+                case "FinSi": auxtoken = 31;
                 break;
                 case "Principal": auxtoken = 32;
                 break;
