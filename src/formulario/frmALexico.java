@@ -661,16 +661,16 @@ public class frmALexico extends javax.swing.JFrame {
         while(objAnalizaLex.objLista.acToken != null){
             switch(objAnalizaLex.objLista.acToken.id){
                 case 1: toks[0]++;
-                consola[0]= consola[0] + objAnalizaLex.objLista.acToken.lex + ", ";
+                consola[0]= consola[0] + objAnalizaLex.objLista.acToken.lex + "\n";
                 break;
                 case 2: toks[1]++;
-                consola[1]= consola[1] + objAnalizaLex.objLista.acToken.lex + ", ";
+                consola[1]= consola[1] + objAnalizaLex.objLista.acToken.lex + "\n";
                 break;
                 case 3: toks[2]++;
-                consola[2]= consola[2] + objAnalizaLex.objLista.acToken.lex + ", ";
+                consola[2]= consola[2] + objAnalizaLex.objLista.acToken.lex + "\n";
                 break;
                 case 4: toks[3]++;
-                consola[3]= consola[3] + objAnalizaLex.objLista.acToken.lex + ", ";
+                consola[3]= consola[3] + objAnalizaLex.objLista.acToken.lex + "\n";
                 break;
                 case 5: toks[4]++;
                 break;

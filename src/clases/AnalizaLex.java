@@ -230,7 +230,7 @@ public class AnalizaLex {
         }
         //if(c!=0)eliminarUltimo();
         if(error > 0) {
-            cadErrores = cadErrores + "Error en linea: "+ String.valueOf(errLinea) + " Columna: " + String.valueOf(errCol) + " Simbolo: " + lexema + '\n'; 
+            cadErrores = cadErrores + "Error en linea: "+ String.valueOf(errLinea) + " Columna: " + String.valueOf(errCol) + " Simbolo Erroneo: " + lexema + '\n'; 
             
         }
         else{

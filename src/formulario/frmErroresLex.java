@@ -5,6 +5,8 @@
  */
 package formulario;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author artbast
@@ -17,6 +19,7 @@ public class frmErroresLex extends javax.swing.JFrame {
     public frmErroresLex() {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        JOptionPane.showMessageDialog(null, "Errores Encontrados!");
     }
 
     /**
@@ -32,6 +35,7 @@ public class frmErroresLex extends javax.swing.JFrame {
         txtErroresLex = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Errores Lexicos");
 
         txtErroresLex.setEditable(false);
         txtErroresLex.setColumns(20);
