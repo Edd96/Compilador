@@ -6,13 +6,14 @@
 package formulario;
 
 import clases.AnalizaLex;
+import clases.Token;
 
 /**
  *
  * @author artbast
  */
 public class frmALexico extends javax.swing.JFrame {
-    AnalizaLex objAnalizaLex;
+    AnalizaLex objLexico;
     String consola[] = {"","","",""};
     int toks[] = new int[33];
 
@@ -655,22 +656,23 @@ public class frmALexico extends javax.swing.JFrame {
     }
     
     public void analizar(String cadena){
-        objAnalizaLex = new AnalizaLex(cadena);
-        objAnalizaLex.encontrarTokens();
-        objAnalizaLex.objLista.acToken = objAnalizaLex.objLista.prToken;
-        while(objAnalizaLex.objLista.acToken != null){
-            switch(objAnalizaLex.objLista.acToken.id){
+        Token listaAux;//Token auxilizar para recorrer la lista
+        objLexico = new AnalizaLex(cadena);
+        objLexico.encontrarTokens();
+        listaAux = objLexico.lista.getPrToken();//Se asigna el primero de la lista al auxiliar
+        while(listaAux != null){
+            switch(listaAux.getId()){
                 case 1: toks[0]++;
-                consola[0]= consola[0] + objAnalizaLex.objLista.acToken.lex + "\n";
+                consola[0]= consola[0] + listaAux.getLex() + "\n";
                 break;
                 case 2: toks[1]++;
-                consola[1]= consola[1] + objAnalizaLex.objLista.acToken.lex + "\n";
+                consola[1]= consola[1] + listaAux.getLex() + "\n";
                 break;
                 case 3: toks[2]++;
-                consola[2]= consola[2] + objAnalizaLex.objLista.acToken.lex + "\n";
+                consola[2]= consola[2] + listaAux.getLex() + "\n";
                 break;
                 case 4: toks[3]++;
-                consola[3]= consola[3] + objAnalizaLex.objLista.acToken.lex + "\n";
+                consola[3]= consola[3] + listaAux.getLex() + "\n";
                 break;
                 case 5: toks[4]++;
                 break;
@@ -731,7 +733,7 @@ public class frmALexico extends javax.swing.JFrame {
                 case 33: toks[32]++;
                 break;
             }
-            objAnalizaLex.objLista.acToken = objAnalizaLex.objLista.acToken.sig;
+            listaAux = listaAux.getSig();
         }
         
         txtIds.setText(String.valueOf(toks[0]));
@@ -768,9 +770,9 @@ public class frmALexico extends javax.swing.JFrame {
         txtPrPrincipal.setText(String.valueOf(toks[31]));
         txtPrLlamar.setText(String.valueOf(toks[32]));
         
-        if(objAnalizaLex.cadErrores != ""){
+        if(objLexico.cadErrores != ""){
             frmErroresLex objErroresPant = new frmErroresLex();
-            objErroresPant.recibir(objAnalizaLex.cadErrores);
+            objErroresPant.recibir(objLexico.cadErrores);
             objErroresPant.setVisible(true);
                     
         }
