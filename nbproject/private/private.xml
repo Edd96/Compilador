@@ -5,7 +5,9 @@
         <group>
             <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/clases/AnalizaLex.java</file>
             <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/formulario/frmALexico.java</file>
+            <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/formulario/frmSintac.java</file>
             <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/clases/Token.java</file>
+            <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/clases/XMLSalida.java</file>
             <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/formulario/editor.java</file>
             <file>file:/home/artbast/NetBeansProjects/ProyectoV1/src/clases/ListaTokens.java</file>
         </group>
