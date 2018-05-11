@@ -6,9 +6,9 @@ import java.util.Set;
 
 public class AnalizaLex {
 
-    int estado = 0, auxtoken = 0, cont = 0;
+    int estado = 0, auxtoken = 0, cont = 0;//auxtoken guarda el numero de tipo de token
     int error = 0, errLinea = 1, errCol = 0;// errores y posicion de estos
-    char c = 0;
+    char c = 0;//simbolo a analizar
     public String cadena = "", lexema = "", cadErrores = "";// variables para lexema
     public ListaTokens lista;// lista donde se almacena los lexemas
     public AnalizaLex(String cadena) {
