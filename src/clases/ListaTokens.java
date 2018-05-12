@@ -36,8 +36,8 @@ public class ListaTokens {
         return (prToken == null);
     }
 
-    void addToken(int id, String lexema) {
-        Token tokenNuevo = new Token(id, lexema);
+    void addToken(int id, String lexema, int nLinea, int nCol) {
+        Token tokenNuevo = new Token(id, lexema, nLinea, nCol);
         if (esListaVacia()) {
             prToken = tokenNuevo;
         } else {

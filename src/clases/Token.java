@@ -10,9 +10,10 @@ import java.util.Set;
 public class Token {
 
     private int id;//Numero de id del token
-    
     private String lex;//lexema
-    
+    private int nLinea;//numero de linea donde esta el token
+    private int nCol;//numero de columna donde termina el token
+
     private Token ant;//enlace al token anterior
     private Token sig;//enlace al token siguiente
 
@@ -50,13 +51,31 @@ public class Token {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public int getnLinea() {
+        return nLinea;
+    }
+
+    public void setnLinea(int nLinea) {
+        this.nLinea = nLinea - (lex.length()-1);
+    }
+    
+    public int getnCol() {
+        return nCol;
+    }
+
+    public void setnCol(int nCol) {
+        this.nCol = nCol;
+    }
 
     /*
     * Contructor para recibir datos
     */
-    public Token(int id, String lex) {
+    public Token(int id, String lex, int nLinea, int nCol) {
         this.id = id;
         this.lex = lex;
+        this.nLinea = nLinea;
+        this.nCol = nCol;
         ant = null;
         sig = null;
     }

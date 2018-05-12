@@ -7,7 +7,7 @@ import java.util.Set;
 public class AnalizaLex {
 
     int estado = 0, auxtoken = 0, cont = 0;
-    int error = 0, errLinea = 1, errCol = 0;// errores y posicion de estos
+    int error = 0, nLinea = 1, nCol = 0;// errores y posicion de estos
     char c = 0;
     public String cadena = "", lexema = "", cadErrores = "";// variables para lexema
     public ListaTokens lista;// lista donde se almacena los lexemas
@@ -25,9 +25,9 @@ public class AnalizaLex {
             if (cont < cadena.length()) {
                 c = cadena.charAt(cont);
                 if (c != '\n') {
-                    errCol++;
+                    nCol++;
                 } else {
-                    errCol = 0;
+                    nCol = 0;
                 }
             } else {
                 c = 0;
@@ -109,7 +109,7 @@ public class AnalizaLex {
                             break;
                         case '\n':
                             estado = 0;
-                            errLinea++;
+                            nLinea++;
                             break;
                         case '\t':
                             estado = 0;
@@ -246,7 +246,7 @@ public class AnalizaLex {
             case 25:
                 if (c == '\n') {
                     estado = 26;
-                    errLinea++;
+                    nLinea++;
                 } else
                     estado = 25;
                 break;
@@ -257,12 +257,12 @@ public class AnalizaLex {
         }
         // if(c!=0)eliminarUltimo();
         if (error > 0) {
-            cadErrores = cadErrores + "Error en linea: " + String.valueOf(errLinea) + "       Columna: "
-                    + String.valueOf(errCol) + "      Simbolo Erroneo: " + lexema + '\n';
+            cadErrores = cadErrores + "Error en linea: " + String.valueOf(nLinea) + "       Columna: "
+                    + String.valueOf(nCol) + "      Simbolo Erroneo: " + lexema + '\n';
 
         } else {
             cont--;
-            errCol--;
+            nCol--;
             switch (lexema) {
             case "void":
                 auxtoken = 22;
@@ -309,8 +309,12 @@ public class AnalizaLex {
     }
 
     public void encontrarTokens() {
+        int aux = 0;
         while (cont < cadena.length()) {
-            lista.addToken(obtenerToken(), lexema);
+            aux = obtenerToken();
+            if(lexema != ""){
+                lista.addToken(aux, lexema,nLinea, nCol);
+            }
         }
     }
 }

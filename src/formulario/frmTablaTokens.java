@@ -6,21 +6,23 @@
 package formulario;
 
 import clases.AnalizaLex;
+import clases.AnalizaSint;
 import clases.Token;
 
 /**
  *
  * @author artbast
  */
-public class frmALexico extends javax.swing.JFrame {
+public class frmTablaTokens extends javax.swing.JFrame {
     AnalizaLex objLexico;
+    AnalizaSint objSintactico;
     String consola[] = {"","","",""};
     int toks[] = new int[33];
 
     /**
      * Creates new form frmALexico
      */
-    public frmALexico() {
+    public frmTablaTokens() {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -637,42 +639,56 @@ public class frmALexico extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmALexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTablaTokens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmALexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTablaTokens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmALexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTablaTokens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmALexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTablaTokens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmALexico().setVisible(true);
+                new frmTablaTokens().setVisible(true);
             }
         });
     }
     
     public void analizar(String cadena){
-        Token listaAux;//Token auxilizar para recorrer la lista
-        objLexico = new AnalizaLex(cadena);
+        Token tokenAux;//Token auxilizar para recorrer la lista
+        
+        //se envia la cadena al analizador lexico
+        objLexico = new AnalizaLex(cadena); 
+        //se procede a identificar tokens
         objLexico.encontrarTokens();
-        listaAux = objLexico.lista.getPrToken();//Se asigna el primero de la lista al auxiliar
-        while(listaAux != null){
-            switch(listaAux.getId()){
+        //se envia una lista con los token ordenados al analizador sintactico
+        objSintactico = new AnalizaSint(objLexico.lista);
+        objSintactico.analizar();
+        
+        //abrir la consola de errores del sintactico
+        frmConsolaSintactico frmSin = new frmConsolaSintactico();
+            frmSin.recibir(objSintactico.errores);
+        frmSin.setVisible(true);
+        //Se asigna el primero de la lista al auxiliar
+        tokenAux = objLexico.lista.getPrToken();
+        
+        while(tokenAux != null){
+            switch(tokenAux.getId()){
                 case 1: toks[0]++;
-                consola[0]= consola[0] + listaAux.getLex() + "\n";
+                consola[0]= consola[0] + tokenAux.getLex() + "\n";
                 break;
                 case 2: toks[1]++;
-                consola[1]= consola[1] + listaAux.getLex() + "\n";
+                consola[1]= consola[1] + tokenAux.getLex() + "\n";
                 break;
                 case 3: toks[2]++;
-                consola[2]= consola[2] + listaAux.getLex() + "\n";
+                consola[2]= consola[2] + tokenAux.getLex() + "\n";
                 break;
                 case 4: toks[3]++;
-                consola[3]= consola[3] + listaAux.getLex() + "\n";
+                consola[3]= consola[3] + tokenAux.getLex() + "\n";
                 break;
                 case 5: toks[4]++;
                 break;
@@ -733,7 +749,7 @@ public class frmALexico extends javax.swing.JFrame {
                 case 33: toks[32]++;
                 break;
             }
-            listaAux = listaAux.getSig();
+            tokenAux = tokenAux.getSig();
         }
         
         txtIds.setText(String.valueOf(toks[0]));

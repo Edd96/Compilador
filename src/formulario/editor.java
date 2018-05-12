@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author eddpe
  */
 public class editor extends javax.swing.JFrame {
-    frmALexico objFormulaioLex;
+    frmTablaTokens objFormulaioLex;
     /**
      * Creates new form editor
      */
@@ -241,7 +241,7 @@ public class editor extends javax.swing.JFrame {
 }
     
     private void btnAnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarActionPerformed
-        objFormulaioLex= new frmALexico();
+        objFormulaioLex= new frmTablaTokens();
         objFormulaioLex.setVisible(true);
         objFormulaioLex.analizar(txtEditor.getText());
     }//GEN-LAST:event_btnAnalizarActionPerformed
