@@ -20,6 +20,9 @@ public class AnalizaSint {
     private void addError(String tokEsperado, int l, int c) {
         errores = errores + "Error en linea: " + String.valueOf(l) + "       Columna: " + String.valueOf(c)
                 + "      Se esperaba: " + tokEsperado + '\n';
+        while(token.getId() != 6 & token.getId()!= 15 | token.getId() == 16){
+            token = token.getSig();
+        }
     }
 
     public void analizar() {
@@ -558,5 +561,4 @@ public class AnalizaSint {
             }
         }
     }
-    
 }
