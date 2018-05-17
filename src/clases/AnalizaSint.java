@@ -11,7 +11,7 @@ public class AnalizaSint {
     ListaTokens lista = new ListaTokens();
     Token token;
     public String errores = "";
-    boolean band = false;//si es true se valido el estado correctamente
+    boolean band = false;// si es true se valido el estado correctamente
 
     public AnalizaSint(ListaTokens lista) {
         this.token = lista.getPrToken();
@@ -24,14 +24,14 @@ public class AnalizaSint {
 
     public void analizar() {
         S();
-        
+
     }
 
-    private void S() {      
-        if(token == null){
-            
-        }else{ 
-            if(token.getId() == 22){
+    private void S() {
+        if (token == null) {
+
+        } else {
+            if (token.getId() == 22) {
                 FUN();
                 S();
             }
@@ -41,33 +41,33 @@ public class AnalizaSint {
     private void FUN() {
         if (token.getId() == 22) {
             token = token.getSig();
-            if(token.getId() == 1){
+            if (token.getId() == 1) {
                 token = token.getSig();
                 if (token.getId() == 13) {
-                token = token.getSig();
-                PAR();
-                if (token.getId() == 14) {
                     token = token.getSig();
-                    if (token.getId() == 15) {
+                    PAR();
+                    if (token.getId() == 14) {
                         token = token.getSig();
-                        BLOQ();
-                        if (token.getId() == 16) {
+                        if (token.getId() == 15) {
                             token = token.getSig();
-                            // se termino correctamente una funcion
+                            BLOQ();
+                            if (token.getId() == 16) {
+                                token = token.getSig();
+                                // se termino correctamente una funcion
+                            } else {
+                                addError("}", token.getnLinea(), token.getnCol());
+                            }
                         } else {
-                            addError("}", token.getnLinea(), token.getnCol());
+                            addError("{", token.getnLinea(), token.getnCol());
                         }
                     } else {
-                        addError("{", token.getnLinea(), token.getnCol());
+                        addError(")", token.getnLinea(), token.getnCol());
                     }
                 } else {
-                    addError(")", token.getnLinea(), token.getnCol());
+                    addError("(", token.getnLinea(), token.getnCol());
                 }
-            } else {
-                addError("(", token.getnLinea(), token.getnCol());
             }
-            }
-            
+
         } else {
             addError("void2", token.getnLinea(), token.getnCol());
         }
@@ -111,8 +111,8 @@ public class AnalizaSint {
                 addError(":", token.getnLinea(), token.getnCol());
             }
         } else {
-            if(token.getId() == 14){
-              band = true;  
+            if (token.getId() == 14) {
+                band = true;
             } else {
                 addError("variable | )", token.getnLinea(), token.getnCol());
             }
@@ -279,14 +279,14 @@ public class AnalizaSint {
                     T1();
                 } else {
                     if (token.getId() == 6 | token.getId() == 8 | token.getId() == 9 | token.getId() == 14) {
-                    // se llego
-                } else {
-                    if (token == null) {
-                        // valido
+                        // se llego
                     } else {
-                        addError("* | / o nombre", token.getnLinea(), token.getnCol());
+                        if (token == null) {
+                            // valido
+                        } else {
+                            addError("* | / o nombre", token.getnLinea(), token.getnCol());
+                        }
                     }
-                }
                 }
             }
         }
@@ -345,22 +345,16 @@ public class AnalizaSint {
                     addError("(", token.getnLinea(), token.getnCol());
                 }
             } else {
-                if(token.getId() == 33){
+                if (token.getId() == 33) {
                     token = token.getSig();
                     LL();
-                    if (token.getId() == 14) {
-                            token = token.getSig();
-                            if (token.getId() == 6) {
-                                token = token.getSig();
-                                // valido
-                            } else {
-                                addError(";", token.getnLinea(), token.getnCol());
-                            }
-                        } else {
-                            addError(")", token.getnLinea(), token.getnCol());
-                        }
-                }
-                else{
+                    if (token.getId() == 6) {
+                        token = token.getSig();
+                        // valido
+                    } else {
+                        addError(";", token.getnLinea(), token.getnCol());
+                    }
+                } else {
                     addError("Nombre funcion", token.getnLinea(), token.getnCol());
                 }
             }
@@ -393,7 +387,7 @@ public class AnalizaSint {
             if (token.getId() == 2 | token.getId() == 3 | token.getId() == 4) {
                 DATO();
             } else {
-                if (token.getId() == 11) {
+                if (token.getId() == 14) {
                     // valido
                 } else {
                     if (token == null) {
@@ -411,7 +405,7 @@ public class AnalizaSint {
             SALE1();
             SALE2();
         } else {
-            addError("variable/dato", token.getnLinea(), token.getnCol());
+            addError("variable | dato", token.getnLinea(), token.getnCol());
         }
     }
 
@@ -443,21 +437,21 @@ public class AnalizaSint {
                 if (token == null) {
                     // validar
                 } else {
-                    addError(",/)", token.getnLinea(), token.getnCol());
+                    addError(", | )", token.getnLinea(), token.getnCol());
                 }
             }
         }
     }
 
     private void SI() {
-        if(token.getId() == 28){
+        if (token.getId() == 28) {
             token = token.getSig();
-            if(token.getId() == 13){
+            if (token.getId() == 13) {
                 token = token.getSig();
                 CON();
-                if(token.getId() == 14){
+                if (token.getId() == 14) {
                     token = token.getSig();
-                    if(token.getId() == 29){
+                    if (token.getId() == 29) {
                         token = token.getSig();
                         BLOQ();
                         SI1();
@@ -476,16 +470,16 @@ public class AnalizaSint {
     }
 
     private void SI1() {
-        if(token.getId()==30){
+        if (token.getId() == 30) {
             token = token.getSig();
             BLOQ();
-            if(token.getId() == 31){
+            if (token.getId() == 31) {
                 token = token.getSig();
             } else {
                 addError("Finsi", token.getnLinea(), token.getnCol());
             }
         } else {
-            if(token.getId() == 31){
+            if (token.getId() == 31) {
                 token = token.getSig();
             } else {
                 addError("Sino/Finsi", token.getnLinea(), token.getnCol());
@@ -523,27 +517,27 @@ public class AnalizaSint {
         if (token.getId() == 7) {
             token = token.getSig();
         } else {
-            if(token.getId() == 17){
+            if (token.getId() == 17) {
                 token = token.getSig();
                 COMP1();
             } else {
-                if(token.getId() == 18){
+                if (token.getId() == 18) {
                     token = token.getSig();
                     COMP2();
                 } else {
                     addError("> | < | =", token.getnLinea(), token.getnCol());
-                }     
+                }
             }
         }
     }
 
     private void COMP1() {
         if (token.getId() == 1 | token.getId() == 2 | token.getId() == 3 | token.getId() == 4) {
-            //valido
+            // valido
         } else {
-            if(token.getId() == 7){
+            if (token.getId() == 7) {
                 token = token.getSig();
-            } else{
+            } else {
                 addError("variable | dato | =", token.getnLinea(), token.getnCol());
             }
         }
@@ -551,12 +545,12 @@ public class AnalizaSint {
 
     private void COMP2() {
         if (token.getId() == 1 | token.getId() == 2 | token.getId() == 3 | token.getId() == 4) {
-            //valido
+            // valido
         } else {
-            if(token.getId() == 7){
+            if (token.getId() == 7) {
                 token = token.getSig();
-            } else{
-                if(token.getId() == 17){
+            } else {
+                if (token.getId() == 17) {
                     token = token.getSig();
                 } else {
                     addError("variable | dato | = | >", token.getnLinea(), token.getnCol());
@@ -564,4 +558,5 @@ public class AnalizaSint {
             }
         }
     }
+    
 }

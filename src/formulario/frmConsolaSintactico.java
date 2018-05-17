@@ -5,6 +5,8 @@
  */
 package formulario;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author artbast
@@ -33,6 +35,7 @@ public class frmConsolaSintactico extends javax.swing.JFrame {
         txtcon = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Consola Analizador Sintáctico");
 
         txtcon.setColumns(20);
         txtcon.setRows(5);
@@ -95,7 +98,12 @@ public class frmConsolaSintactico extends javax.swing.JFrame {
     }
     
     public void recibir(String errores){
-        txtcon.setText(errores);
+        if(errores == ""){
+            txtcon.setText("No se encontraron errores Sintacticos");
+        }else{
+            JOptionPane.showMessageDialog(this, "Errores sintacticos encontrados!");
+            txtcon.setText(errores);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

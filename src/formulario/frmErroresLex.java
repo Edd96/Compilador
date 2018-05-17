@@ -19,7 +19,7 @@ public class frmErroresLex extends javax.swing.JFrame {
     public frmErroresLex() {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        JOptionPane.showMessageDialog(null, "Errores Encontrados!");
+        JOptionPane.showMessageDialog(null, "Errores lexicos encontrados!");
     }
 
     /**
