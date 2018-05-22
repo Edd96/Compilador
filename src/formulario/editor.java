@@ -123,6 +123,11 @@ public class editor extends javax.swing.JFrame {
         mnAnalisisArchivo.add(mnAnalisisSalidaProg);
 
         mnAnalisisTablaTokens.setText("Tabla de Simbolos");
+        mnAnalisisTablaTokens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnAnalisisTablaTokensActionPerformed(evt);
+            }
+        });
         mnAnalisisArchivo.add(mnAnalisisTablaTokens);
 
         mnAnalisisErroresXML.setText("Errores (Archivo XML)");
@@ -151,22 +156,23 @@ public class editor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
                         .addGap(14, 14, 14))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(269, 269, 269)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
-                        .addGap(56, 56, 56)
+                        .addGap(99, 99, 99)
                         .addComponent(btnAnalizar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(247, 247, 247))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnalizar)
                     .addComponent(btnLimpiar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -265,6 +271,11 @@ public class editor extends javax.swing.JFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         txtEditor.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void mnAnalisisTablaTokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnAnalisisTablaTokensActionPerformed
+        frmTabla objTabla = new frmTabla();
+        objTabla.setVisible(true);
+    }//GEN-LAST:event_mnAnalisisTablaTokensActionPerformed
 
     
     /**

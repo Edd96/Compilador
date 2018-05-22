@@ -20,7 +20,7 @@ public class AnalizaSint {
     private void addError(String tokEsperado, int l, int c) {
         errores = errores + "Error en linea: " + String.valueOf(l) + "       Columna: " + String.valueOf(c)
                 + "      Se esperaba: " + tokEsperado + '\n';
-        while(token.getId() != 6 & token.getId()!= 15 | token.getId() == 16){
+        while(token.getId() != 6 & token.getId()!= 15 | token.getId() == 16 | token == null){
             token = token.getSig();
         }
     }
@@ -287,7 +287,7 @@ public class AnalizaSint {
                         if (token == null) {
                             // valido
                         } else {
-                            addError("* | / o nombre", token.getnLinea(), token.getnCol());
+                            addError("* | / | nombre | ;", token.getnLinea(), token.getnCol());
                         }
                     }
                 }

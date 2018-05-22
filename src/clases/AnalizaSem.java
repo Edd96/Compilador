@@ -12,8 +12,8 @@ package clases;
  * 
  * Es una lista doble
  */
-public class Simbolo {
-    private String id;
+class Simbolo {
+    private String nombre;
     private int tipo;
     private int valorNum;
     private String valorCad;
@@ -38,11 +38,11 @@ public class Simbolo {
     }
 
     public String getId() {
-        return id;
+        return nombre;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String nombre) {
+        this.nombre = nombre;
     }
     
     public int getTipo(){
