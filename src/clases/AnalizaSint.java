@@ -42,7 +42,7 @@ public class AnalizaSint {
     }
 
     private void FUN() {
-        if (token.getId() == 22) {
+        if (token.getId() == 22 | token.getId() == 32) {
             token = token.getSig();
             if (token.getId() == 1) {
                 token = token.getSig();
