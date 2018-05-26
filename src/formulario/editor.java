@@ -39,6 +39,7 @@ public class editor extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtEditor = new javax.swing.JTextArea();
         btnLimpiar = new javax.swing.JButton();
+        btnEjecutar = new javax.swing.JButton();
         mnBar = new javax.swing.JMenuBar();
         menuAbrir = new javax.swing.JMenu();
         mnArchivoNuevo = new javax.swing.JMenuItem();
@@ -72,6 +73,13 @@ public class editor extends javax.swing.JFrame {
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        btnEjecutar.setText("Ejecutar");
+        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActionPerformed(evt);
             }
         });
 
@@ -122,7 +130,7 @@ public class editor extends javax.swing.JFrame {
         mnAnalisisSalidaProg.setText("Salida del Programa");
         mnAnalisisArchivo.add(mnAnalisisSalidaProg);
 
-        mnAnalisisTablaTokens.setText("Tabla de Simbolos");
+        mnAnalisisTablaTokens.setText("Tabla de Tokens");
         mnAnalisisTablaTokens.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnAnalisisTablaTokensActionPerformed(evt);
@@ -140,6 +148,11 @@ public class editor extends javax.swing.JFrame {
         menuAyuda.setText("Ayuda");
 
         mnAyudaAcercade.setText("Acerca de");
+        mnAyudaAcercade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnAyudaAcercadeActionPerformed(evt);
+            }
+        });
         menuAyuda.add(mnAyudaAcercade);
 
         mnBar.add(menuAyuda);
@@ -157,11 +170,12 @@ public class editor extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnLimpiar)
-                        .addGap(99, 99, 99)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAnalizar)
-                        .addGap(247, 247, 247))))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEjecutar)
+                        .addGap(250, 250, 250))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +185,8 @@ public class editor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnalizar)
-                    .addComponent(btnLimpiar))
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnEjecutar))
                 .addContainerGap())
         );
 
@@ -277,6 +292,16 @@ public class editor extends javax.swing.JFrame {
         objTabla.setVisible(true);
     }//GEN-LAST:event_mnAnalisisTablaTokensActionPerformed
 
+    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+       frmConsola consola = new frmConsola();
+       consola.setVisible(true);
+    }//GEN-LAST:event_btnEjecutarActionPerformed
+
+    private void mnAyudaAcercadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnAyudaAcercadeActionPerformed
+        frmAcercade acerca = new frmAcercade();
+        acerca.setVisible(true);
+    }//GEN-LAST:event_mnAyudaAcercadeActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -314,6 +339,7 @@ public class editor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnalizar;
+    private javax.swing.JButton btnEjecutar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;

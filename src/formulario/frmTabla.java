@@ -16,6 +16,7 @@ public class frmTabla extends javax.swing.JFrame {
      */
     public frmTabla() {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**

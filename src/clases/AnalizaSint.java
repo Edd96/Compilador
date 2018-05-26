@@ -21,8 +21,8 @@ public class AnalizaSint {
 
     public AnalizaSint(ListaTokens lista) {
         this.token = lista.getPrToken();
-        objConsola = new frmConsola();
-        objConsola.setVisible(true);
+        //objConsola = new frmConsola();
+        //objConsola.setVisible(true);
     }
 
     private void addError(String tokEsperado, int l, int c) {
@@ -115,21 +115,24 @@ public class AnalizaSint {
 
     private void PAR(String ambAct) {
         if (token.getId() == 1) {
-            if(tablaSimbolos.addSimbol(token.getLex(), ambAct)){
-                objConsola.txtPantalla.setText("Listo \n");
-            }else{
-                objConsola.txtPantalla.setText("La variable existe \n");
-                return;
-            }
             token = token.getSig();
+            
+            /*if(tablaSimbolos.addSimbol(token.getLex(), ambAct)){
+                //objConsola.txtPantalla.setText("Listo \n");
+            }else{
+                //objConsola.txtPantalla.setText("La variable existe \n");
+                return;
+            }*/
             if (token.getId() == 5) {
                 token = token.getSig();
-                tablaSimbolos.addTipo(TIPO());
+                TIPO();
+                //tablaSimbolos.addTipo(TIPO());
             } else {
                 addError(":", token.getnLinea(), token.getnCol());
             }
         } else {
             if (token.getId() == 14) {
+                
                 band = true;
             } else {
                 addError("variable | )", token.getnLinea(), token.getnCol());

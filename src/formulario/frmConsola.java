@@ -16,6 +16,7 @@ public class frmConsola extends javax.swing.JFrame {
      */
     public frmConsola() {
         initComponents();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -37,6 +38,7 @@ public class frmConsola extends javax.swing.JFrame {
 
         txtPantalla.setColumns(20);
         txtPantalla.setRows(5);
+        txtPantalla.setText("Coming soon ...   :D");
         txtPantalla.setEnabled(false);
         jScrollPane1.setViewportView(txtPantalla);
 
