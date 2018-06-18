@@ -1,8 +1,6 @@
 
 package clases;
 
-import formulario.frmConsola;
-
 /**
  *
  * Con esta clase se pueden crear objetos de tipo Analizador Sintactico y
@@ -12,17 +10,11 @@ import formulario.frmConsola;
 public class AnalizaSint {
     ListaTokens lista = new ListaTokens();
     Token token;
-    frmConsola objConsola;
-    TablaSimbolos tablaSimbolos = new TablaSimbolos();
-    String ambAct = ""; //ambito actual
-    
     public String errores = "";
     boolean band = false;// si es true se valido el estado correctamente
 
     public AnalizaSint(ListaTokens lista) {
         this.token = lista.getPrToken();
-        //objConsola = new frmConsola();
-        //objConsola.setVisible(true);
     }
 
     private void addError(String tokEsperado, int l, int c) {
@@ -50,14 +42,13 @@ public class AnalizaSint {
     }
 
     private void FUN() {
-        if (token.getId() == 22) {
+        if (token.getId() == 22 | token.getId() == 32) {
             token = token.getSig();
-            if (token.getId() == 1 | token.getId() == 32) {
-                ambAct = token.getLex();
+            if (token.getId() == 1) {
                 token = token.getSig();
                 if (token.getId() == 13) {
                     token = token.getSig();
-                    PAR(ambAct);
+                    PAR();
                     if (token.getId() == 14) {
                         token = token.getSig();
                         if (token.getId() == 15) {
@@ -113,26 +104,17 @@ public class AnalizaSint {
         }
     }
 
-    private void PAR(String ambAct) {
+    private void PAR() {
         if (token.getId() == 1) {
             token = token.getSig();
-            
-            /*if(tablaSimbolos.addSimbol(token.getLex(), ambAct)){
-                //objConsola.txtPantalla.setText("Listo \n");
-            }else{
-                //objConsola.txtPantalla.setText("La variable existe \n");
-                return;
-            }*/
             if (token.getId() == 5) {
                 token = token.getSig();
                 TIPO();
-                //tablaSimbolos.addTipo(TIPO());
             } else {
                 addError(":", token.getnLinea(), token.getnCol());
             }
         } else {
             if (token.getId() == 14) {
-                
                 band = true;
             } else {
                 addError("variable | )", token.getnLinea(), token.getnCol());
@@ -140,25 +122,11 @@ public class AnalizaSint {
         }
     }
 
-    private int TIPO() {
+    private void TIPO() {
         if (token.getId() == 23 | token.getId() == 24 | token.getId() == 25) {
-            if(token.getId() == 23) {
-                token = token.getSig();
-                return 1;
-            }
-            else{
-                if(token.getId() == 24){
-                    token = token.getSig();
-                    return 2;
-                }
-                else {
-                    token = token.getSig();
-                    return 3;
-                }
-            }
+            token = token.getSig();
         } else {
             addError("tipo de dato", token.getnLinea(), token.getnCol());
-            return 0;
         }
     }
 
@@ -178,7 +146,7 @@ public class AnalizaSint {
             if (token.getId() == 7) {
                 ASIG();
             } else {
-                addError(":/=", token.getnLinea(), token.getnCol());
+                addError(": | =", token.getnLinea(), token.getnCol());
             }
         }
     }
@@ -201,24 +169,12 @@ public class AnalizaSint {
     private void DEC1() {
         if (token.getId() == 7) {
             token = token.getSig();
-            DEC2();
+            DATO();
         } else {
             if (token.getId() == 6) {
                 // se valida
             } else {
                 addError(";", token.getnLinea(), token.getnCol());
-            }
-        }
-    }
-
-    private void DEC2() {
-        if (token.getId() == 1 | token.getId() == 2 | token.getId() == 3) {
-            OP();
-        } else {
-            if (token.getId() == 4) {
-                DATO();
-            } else {
-                addError("valor", token.getnLinea(), token.getnCol());
             }
         }
     }
@@ -252,7 +208,6 @@ public class AnalizaSint {
     private void DATO() {
         if (token.getId() == 2 | token.getId() == 3 | token.getId() == 4) {
             token = token.getSig();
-            
         } else {
             addError("valor", token.getnLinea(), token.getnCol());
         }
